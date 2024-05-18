@@ -1,18 +1,43 @@
 import { FaTrashAlt } from "react-icons/fa";
+import apiRequest from "./apiRequest";
 
 const ItemList = (props) => {
   let { items, setItems } = props;
-  const handleCheck = (id) => {
+  const API_URL = "http://localhost:4000/items";
+
+  const handleCheck = async (id) => {
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
     setItems(listItems);
-    localStorage.setItem("shoppingItems", JSON.stringify(listItems));
+
+    const updateItem = listItems.filter((item) => item.id === id);
+
+    const putUrl = `${API_URL}/${id}`;
+    const putOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        item: updateItem[0].item,
+        checked: updateItem[0].checked,
+      }),
+    };
+    const result = await apiRequest(putUrl, putOptions);
+    result ? console.log(result) : "";
   };
-  const handleDelete = (id) => {
+
+  const handleDelete = async (id) => {
     const listItems = items.filter((item) => item.id !== id);
+    console.log(id);
     setItems(listItems);
-    localStorage.setItem("shoppingItems", JSON.stringify(listItems));
+    const deleteUrl = `${API_URL}/${id}`;
+    const deleteOptions = {
+      method: "DELETE",
+    };
+    const result = await apiRequest(deleteUrl, deleteOptions);
+    result ? console.log(result) : "";
   };
   return (
     <ul>

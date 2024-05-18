@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "checked": false,
+      "item": "Peanut Butter"
+    },
+    {
+      "id": "2",
+      "checked": false,
+      "item": "Protein Bar"
+    },
+    {
+      "id": "3",
+      "checked": false,
+      "item": "Milk"
+    }
+  ]
+}
