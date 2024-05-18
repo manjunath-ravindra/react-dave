@@ -1,9 +1,10 @@
 import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const AddItem = (props) => {
   let { items, setItems } = props;
   const [newItem, setNewItem] = useState("");
+  const inputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ const AddItem = (props) => {
   const addItem = (item) => {
     const newId = items.length ? items.length + 1 : 1;
     const addedItem = { id: newId, checked: false, item: item };
-    const newList = [...items, addedItem]
+    const newList = [...items, addedItem];
     setItems(newList);
     localStorage.setItem("shoppingItems", JSON.stringify(newList));
   };
@@ -25,13 +26,17 @@ const AddItem = (props) => {
       <input
         type="text"
         id="addItem"
+        ref={inputRef}
         placeholder="Add an Item"
         required
         autoFocus
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
       />
-      <button type="submit" aria-label="Add Item">
+      <button
+        type="submit"
+        aria-label="Add Item"
+        onClick={()=>inputRef.current.focus()}>
         <FaPlus />
       </button>
     </form>
